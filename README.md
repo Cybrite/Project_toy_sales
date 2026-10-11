@@ -110,25 +110,15 @@ The Python script in [`(3) Python.py`](./%283%29%20Python.py) performs the follo
 
 ### 5.1 Load the raw data
 
-The script reads the sales CSV with `latin-1` encoding. The original script was created in Google Colab and currently points to a Google Drive path:
+The script reads the local [`(1) Dataset.csv`](./%281%29%20Dataset.csv) file with `latin-1` encoding. It resolves the input and output paths relative to the script directory, so it can be run from any working directory:
 
 ```python
-df = pd.read_csv(
-    '/content/drive/MyDrive/Final Project - DA Carerha /sales_data_sample.csv',
-    encoding='latin-1'
-)
+project_dir = Path(__file__).resolve().parent
+input_path = project_dir / '(1) Dataset.csv'
+df = pd.read_csv(input_path, encoding='latin-1')
 ```
 
-For local execution, change this path to the local raw file:
-
-```python
-df = pd.read_csv(
-    r'D:\Data analytics\Project_toy_sales\(1) Dataset.csv',
-    encoding='latin-1'
-)
-```
-
-Using a raw string (`r'...'`) avoids problems with backslashes in Windows paths.
+The output is written to [`(4) dataframe - from Python.csv`](./%284%29%20dataframe%20-%20from%20Python.csv) in the same directory.
 
 ### 5.2 Remove fields that are not used
 
@@ -248,19 +238,10 @@ The script notes that 2005 is incomplete in the source data, so comparisons invo
 
 ### 5.9 Export the processed data
 
-At the end, the script writes the processed DataFrame to:
+At the end, the script writes the processed DataFrame to the local project export:
 
 ```python
-df.to_csv('/content/drive/My Drive/df.csv', index=False)
-```
-
-For local execution, replace this with a repository path, for example:
-
-```python
-df.to_csv(
-    r'D:\Data analytics\Project_toy_sales\(4) dataframe - from Python.csv',
-    index=False
-)
+df.to_csv(output_path, index=False)
 ```
 
 The checked-in processed CSV is an example/export of this workflow. Re-running the script may update it depending on the input path and any changes made to the analysis.
@@ -355,9 +336,8 @@ pip install pandas numpy matplotlib seaborn
 ### Run the Python analysis
 
 1. Open [`(3) Python.py`](./%283%29%20Python.py).
-2. Change the input CSV path from the Google Drive path to the local `(1) Dataset.csv` path.
-3. Change the output path from the Google Drive location to the local `(4) dataframe - from Python.csv` path, if you want to overwrite the checked-in export.
-4. Run the script from the project directory:
+2. Ensure [`(1) Dataset.csv`](./%281%29%20Dataset.csv) is in the same project directory.
+3. Run the script from the project directory:
 
 ```bash
 python "(3) Python.py"
